@@ -1,27 +1,17 @@
-plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-}
-
-ext {
-    PUBLISH_GROUP_ID = ConfigurationData.publishGroupId
-    PUBLISH_ARTIFACT_ID = 'crypto-android'
-    PUBLISH_VERSION = ConfigurationData.versionNameCrypto
-    PUBLISH_DESCRIPTION = 'Android Bindings to the Matrix Rust Crypto SDK'
-}
-
-apply from: "${rootDir}/scripts/publish-module.gradle"
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'maven-publish'
 
 android {
 
     namespace 'org.matrix.rustcomponents.sdk.crypto'
 
-    compileSdk ConfigurationData.compileSdk
+    compileSdk 33
 
     defaultConfig {
-        minSdk ConfigurationData.minSdk
-        targetSdk ConfigurationData.targetSdk
-        versionName ConfigurationData.versionNameCrypto
+        minSdk 21
+        targetSdk 33
+        versionName "0.3.15.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -43,6 +33,38 @@ android {
 }
 
 dependencies {
-    implementation Dependencies.jna
-    testImplementation Dependencies.junit
+    implementation 'net.java.dev.jna:jna:5.13.0@aar'
+}
+
+def groupIdString = "org.futo.rustcomponents"
+def artifactIdString = "crypto-android"
+
+afterEvaluate {
+    Properties properties = new Properties()
+    if (rootProject.file("local.properties").exists()) {
+        properties.load(rootProject.file("local.properties").newDataInputStream())
+    }
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId groupIdString
+                artifactId artifactIdString
+                version rootProject.ext.module_version
+            }
+        }
+        repositories {
+            maven {
+                url "https://gitlab.futo.org/api/v4/projects/$rootProject.ext.module_gitlab_projectId/packages/maven"
+                name "GitLab"
+                credentials(HttpHeaderCredentials) {
+                    name = "Private-Token"
+                    value = properties.getProperty("PUBLISH_TOKEN")
+                }
+                authentication {
+                    header(HttpHeaderAuthentication)
+                }
+            }
+        }
+    }
 }
