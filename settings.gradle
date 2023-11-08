@@ -16,7 +16,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "matrix-rust-components-kotlin"
-include ':sdk:sdk-android'
-include ':sdk:sdk-jvm'
 include ':crypto:crypto-android'
 include ':crypto:crypto-jvm'
