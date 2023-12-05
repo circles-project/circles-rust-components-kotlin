@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     ext {
-        module_version = "0.3.15.1"
+        module_version = "0.3.15.2"
         module_gitlab_projectId = "130"
     }
 }
