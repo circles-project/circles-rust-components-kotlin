@@ -1,4 +1,5 @@
 # Matrix rust components kotlin
+[![](https://jitpack.io/v/org.futo.gitlab.circles/circles-rust-components-kotlin.svg)](https://jitpack.io/#org.futo.gitlab.circles/circles-rust-components-kotlin)
 
 This repository is used for distributing kotlin releases of the Matrix Rust SDK. It'll provide the corresponding aar and also publish them on maven.
 
