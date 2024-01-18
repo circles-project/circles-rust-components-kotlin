@@ -30,40 +30,27 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
     implementation 'net.java.dev.jna:jna:5.13.0@aar'
 }
 
-def groupIdString = "org.futo.rustcomponents"
-def artifactIdString = "crypto-android"
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = "org.futo.rustcomponents"
+            artifactId = "crypto-android"
+            version = rootProject.ext.module_version
 
-afterEvaluate {
-    Properties properties = new Properties()
-    if (rootProject.file("local.properties").exists()) {
-        properties.load(rootProject.file("local.properties").newDataInputStream())
-    }
-    publishing {
-        publications {
-            release(MavenPublication) {
+            afterEvaluate {
                 from components.release
-                groupId groupIdString
-                artifactId artifactIdString
-                version rootProject.ext.module_version
-            }
-        }
-        repositories {
-            maven {
-                url "https://gitlab.futo.org/api/v4/projects/$rootProject.ext.module_gitlab_projectId/packages/maven"
-                name "GitLab"
-                credentials(HttpHeaderCredentials) {
-                    name = "Private-Token"
-                    value = properties.getProperty("PUBLISH_TOKEN")
-                }
-                authentication {
-                    header(HttpHeaderAuthentication)
-                }
             }
         }
     }
