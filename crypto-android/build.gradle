@@ -45,7 +45,7 @@ dependencies {
 publishing {
     publications {
         release(MavenPublication) {
-            groupId = "org.futo.rustcomponents"
+            groupId = "org.futo.gitlab.circles"
             artifactId = "crypto-android"
             version = rootProject.ext.module_version
 
