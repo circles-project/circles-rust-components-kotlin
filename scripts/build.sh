@@ -57,7 +57,7 @@ if [ "$gradle_module" = "crypto" ]; then
     echo "please set the ANDROID_NDK environment variable to your Android NDK installation"
     exit 1
   fi
-  src_dir="$scripts_dir/../crypto/crypto-android/src/main"
+  src_dir="$scripts_dir/../crypto-android/src/main"
   package="crypto-sdk"
 else
   src_dir="$scripts_dir/../sdk/sdk-android/src/main"
@@ -89,25 +89,25 @@ moveFunction() {
 ## For now, cargo ndk includes all generated so files from the target directory, so makes sure it just includes the one we need.
 echo "Clean .so files"
 if [ "$gradle_module" = "crypto" ]; then
-  find crypto/crypto-android/src/main/jniLibs -type f ! -name 'libmatrix_sdk_crypto_ffi.so' -delete
+  find crypto-android/src/main/jniLibs -type f ! -name 'libmatrix_sdk_crypto_ffi.so' -delete
 else
   find sdk/sdk-android/src/main/jniLibs -type f ! -name 'libmatrix_sdk_ffi.so' -delete
 fi
 
-if ${is_release}; then
-  if [ "$gradle_module" = "sdk" ]; then
-    ./gradlew :sdk:sdk-android:assembleRelease
-    moveFunction "sdk/sdk-android/build/outputs/aar/sdk-android-release.aar"
-  else
-    ./gradlew :crypto:crypto-android:assembleRelease
-    moveFunction "crypto/crypto-android/build/outputs/aar/crypto-android-release.aar"
-  fi
-else
-  if [ "$gradle_module" = "sdk" ]; then
-    ./gradlew :sdk:sdk-android:assembleDebug
-    moveFunction "sdk/sdk-android/build/outputs/aar/sdk-android-debug.aar"
-  else
-    ./gradlew :crypto:crypto-android:assembleDebug
-    moveFunction "crypto/crypto-android/build/outputs/aar/crypto-android-debug.aar"
-  fi
-fi
+#if ${is_release}; then
+#  if [ "$gradle_module" = "sdk" ]; then
+#    ./gradlew :sdk:sdk-android:assembleRelease
+#    moveFunction "sdk/sdk-android/build/outputs/aar/sdk-android-release.aar"
+#  else
+#    ./gradlew :crypto-android:assembleRelease
+#    moveFunction "crypto-android/build/outputs/aar/crypto-android-release.aar"
+#  fi
+#else
+#  if [ "$gradle_module" = "sdk" ]; then
+#    ./gradlew :sdk:sdk-android:assembleDebug
+#    moveFunction "sdk/sdk-android/build/outputs/aar/sdk-android-debug.aar"
+#  else
+#    ./gradlew :crypto-android:assembleDebug
+#    moveFunction "crypto/crypto-android/build/outputs/aar/crypto-android-debug.aar"
+#  fi
+#fi
