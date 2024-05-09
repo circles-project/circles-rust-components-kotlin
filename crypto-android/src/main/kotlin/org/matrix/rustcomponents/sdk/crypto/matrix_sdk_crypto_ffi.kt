@@ -8146,7 +8146,11 @@ data class Device (
      * The first time this device was seen in local timestamp, milliseconds
      * since epoch.
      */
-    var `firstTimeSeenTs`: kotlin.ULong
+    var `firstTimeSeenTs`: kotlin.ULong, 
+    /**
+     * Whether or not the device is a dehydrated device.
+     */
+    var `dehydrated`: kotlin.Boolean
 ) {
     
     companion object
@@ -8164,6 +8168,7 @@ public object FfiConverterTypeDevice: FfiConverterRustBuffer<Device> {
             FfiConverterBoolean.read(buf),
             FfiConverterBoolean.read(buf),
             FfiConverterULong.read(buf),
+            FfiConverterBoolean.read(buf),
         )
     }
 
@@ -8176,7 +8181,8 @@ public object FfiConverterTypeDevice: FfiConverterRustBuffer<Device> {
             FfiConverterBoolean.allocationSize(value.`isBlocked`) +
             FfiConverterBoolean.allocationSize(value.`locallyTrusted`) +
             FfiConverterBoolean.allocationSize(value.`crossSigningTrusted`) +
-            FfiConverterULong.allocationSize(value.`firstTimeSeenTs`)
+            FfiConverterULong.allocationSize(value.`firstTimeSeenTs`) +
+            FfiConverterBoolean.allocationSize(value.`dehydrated`)
     )
 
     override fun write(value: Device, buf: ByteBuffer) {
@@ -8189,6 +8195,7 @@ public object FfiConverterTypeDevice: FfiConverterRustBuffer<Device> {
             FfiConverterBoolean.write(value.`locallyTrusted`, buf)
             FfiConverterBoolean.write(value.`crossSigningTrusted`, buf)
             FfiConverterULong.write(value.`firstTimeSeenTs`, buf)
+            FfiConverterBoolean.write(value.`dehydrated`, buf)
     }
 }
 
