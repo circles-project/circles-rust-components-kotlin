@@ -2,4 +2,4 @@ jdk:
   - openjdk17
 install:
   - FILE="-Dfile=crypto-android-release.aar"
-  - mvn install:install-file $FILE -DgroupId=org.futo.gitlab.circles -DartifactId=crypto-android -Dversion=0.3.15.8 -Dpackaging=aar -DpomFile=pom.xml
+  - mvn install:install-file $FILE -DgroupId=org.futo.gitlab.circles -DartifactId=crypto-android -Dversion=0.3.15.9 -Dpackaging=aar -DpomFile=pom.xml

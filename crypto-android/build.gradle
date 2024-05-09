@@ -46,7 +46,7 @@ publishing {
         release(MavenPublication) {
             groupId = "org.futo.gitlab.circles"
             artifactId = "crypto-android"
-            version = "0.3.15.8"
+            version = "0.3.15.9"
 
             afterEvaluate {
                 from components.release
